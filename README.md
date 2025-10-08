@@ -29,7 +29,7 @@ Then connect to your remote system using SSH secret key with instance name - `ss
 Once you enter into the remote system you need to install node there and manage node  version also that project uses.
 Then clone the github projects which is pushed for DevTinder both web and server
 
-- Frontend deployment (In remote system)
+## Frontend deployment (In remote system)
    1. Install dependencies - `npm install`
    2. Build your react app - `npm run build`
    3. `sudo apt update` - to update the remote system
@@ -43,35 +43,35 @@ Then clone the github projects which is pushed for DevTinder both web and server
 0.0.0.0/0 }
    11. Now copy the public address in your instance run it on web - Frontend load on the server 
 
-- Backend deployment (in remote system, inside DevTinder-server folder only to run backend)
-    1. Install dependencies - `npm install`
-    2. Run backend app - `npm start` (In production we use npm start not npm run dev)
-    3. If your DB is not connected you have to give access to DB where it can access it from anywhere IP address. So add the Public ip address if this instance to the DB.
-    4. Then set the port :7777 to security groups inbound rules.
-    5. Load the https://publicIp:7777 - backend app will start
-    6. Once we exit from remote system out backend server will stop. To run 24/7 we can use PM2 package to run backend server 24/7.
-    7. Install pm2 package globally npm `install pm2 -g` in remote system and then run `pm2 start npm -- start`
-    8. To check the logs - `pm2 logs`
-    9. To flush the logs - `pm2 flush <name>` => <name> is the name of the server
-    10. To check the list of servers - `pm2 list`
-    11. To stop and delete the list in pm2  - `pm2 stop <name>` and `pm2 delete <name>`
-    12. To add a custom name to pm2 list name - `pm2 start npm --name "devTinderBackend" -- start`
-    13. Now we have connect both frontend and backend together to run a website.
-    14. setup public ip to server_name and write rules to proxy pass in nginx conf file. - `sudo nano /etc/nginx/sites-available/default`
-        # Nginx Config
-        Editor will open in terminal to edit nginx conf file.
-        `server_name <PublicIpaddress>`
+## Backend deployment (in remote system, inside DevTinder-server folder only to run backend)
+ 1. Install dependencies - `npm install`
+ 2. Run backend app - `npm start` (In production we use npm start not npm run dev)
+ 3. If your DB is not connected you have to give access to DB where it can access it from anywhere IP address. So add the Public ip address if this instance to the DB.
+ 4. Then set the port :7777 to security groups inbound rules.
+ 5. Load the https://publicIp:7777 - backend app will start
+ 6. Once we exit from remote system out backend server will stop. To run 24/7 we can use PM2 package to run backend server 24/7.
+ 7. Install pm2 package globally npm `install pm2 -g` in remote system and then run `pm2 start npm -- start`
+ 8. To check the logs - `pm2 logs`
+ 9. To flush the logs - `pm2 flush <name>` => <name> is the name of the server
+ 10. To check the list of servers - `pm2 list`
+ 11. To stop and delete the list in pm2  - `pm2 stop <name>` and `pm2 delete <name>`
+ 12. To add a custom name to pm2 list name - `pm2 start npm --name "devTinderBackend" -- start`
+ 13. Now we have connect both frontend and backend together to run a website.
+ 14. setup public ip to server_name and write rules to proxy pass in nginx conf file. - `sudo nano /etc/nginx/sites-available/default`
+     # Nginx Config
+     Editor will open in terminal to edit nginx conf file.
+     `server_name <PublicIpaddress>`
 
-        `location /api/` {
-            `proxy_pass http://localhost:7777/;`  # Pass the request to the Node.js app
-            `proxy_http_version 1.1;`
-            `proxy_set_header Upgrade $http_upgrade;`
-            `proxy_set_header Connection 'upgrade';`
-            `proxy_set_header Host $host;`
-            `proxy_cache_bypass $http_upgrade;`
-        }
-    15. Then restart nginx - `sudo systemctl restart nginx`
-    16. Modify BASE_URL = 'https://localhost:7777' to '/api' in frontend and push it to github and remote system.
+     `location /api/` {
+         `proxy_pass http://localhost:7777/;`  # Pass the request to the Node.js app
+         `proxy_http_version 1.1;`
+         `proxy_set_header Upgrade $http_upgrade;`
+         `proxy_set_header Connection 'upgrade';`
+         `proxy_set_header Host $host;`
+         `proxy_cache_bypass $http_upgrade;`
+     }
+ 15. Then restart nginx - `sudo systemctl restart nginx`
+ 16. Modify BASE_URL = 'https://localhost:7777' to '/api' in frontend and push it to github and remote system.
 
 
 
