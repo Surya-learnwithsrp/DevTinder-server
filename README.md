@@ -23,8 +23,8 @@
 Sign up with AWS create a new account
 Search EC2 instance and create a new instance by using default options, choose ubantu OS for server
 Click create instance, wait until status checks is fully passed.
-Connect to the remote system using SSH client method - chmod 400 "devTinder-secret.pem"
-Then connect to your remote system using SSH secret key with instance name - ssh -i "devTinder-secret.pem" ubuntu@ec2-3-80-74-91.compute-1.amazonaws.com
+Connect to the remote system using SSH client method - `chmod 400 "devTinder-secret.pem"`
+Then connect to your remote system using SSH secret key with instance name - `ssh -i "devTinder-secret.pem" ubuntu@ec2-3-80-74-91.compute-1.amazonaws.com`
 
 Once you enter into the remote system you need to install node there and manage node  version also that project uses.
 Then clone the github projects which is pushed for DevTinder both web and server
@@ -71,7 +71,7 @@ Then clone the github projects which is pushed for DevTinder both web and server
             `proxy_cache_bypass $http_upgrade;`
         }
     15. Then restart nginx - `sudo systemctl restart nginx`
-    16. 
+    16. Modify BASE_URL = 'https://localhost:7777' to '/api' in frontend and push it to github and remote system.
 
 
 
